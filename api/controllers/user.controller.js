@@ -28,11 +28,14 @@ export const updateUser = async (req, res, next) => {
         if (!username.match(/^[a-zA-Z0-9]+$/)) {
             return next(errorHandler(401, 'username must include only letters and numbers'))
         }
-        try {
-            const existedUser = await User.findById(req.params.userId)
+    }
+    try {
+        const existedUser = await User.findById(req.params.userId)
+
+        if (existedUser) {
             const existingUser = existedUser && await User.findByIdAndUpdate(req.params.userId, {
                 $set: {
-                    username: username,
+                    username: req.body?.email ? username : existedUser._doc.username,
                     email: req.body?.email ? req.body?.email : existedUser._doc.email,
                     profilePicture: req.body?.profilePicture ? req.body?.profilePicture : existedUser._doc.profilePicture,
                     password: req.body?.password ? req.body?.password : existedUser._doc.password,
@@ -41,10 +44,10 @@ export const updateUser = async (req, res, next) => {
             existingUser.save()
             const { password: pass, ...updateUser } = existingUser._doc
             res.status(200).json({ user: updateUser })
-        } catch (error) {
-            return next(error)
-
         }
+    } catch (error) {
+        return next(error)
+
     }
 
 }

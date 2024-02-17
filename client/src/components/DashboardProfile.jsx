@@ -79,8 +79,6 @@ export default function DashboardProfile() {
     });
   };
 
-  console.log(formData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(formData).length === 0) {
