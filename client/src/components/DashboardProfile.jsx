@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,12 @@ import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import axios from "axios";
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
   updateFailure,
   updateStart,
   updateSuccess,
@@ -17,6 +23,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { HiExclamationCircle } from "react-icons/hi";
 
 export default function DashboardProfile() {
   const navigate = useNavigate();
@@ -27,6 +34,9 @@ export default function DashboardProfile() {
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [updateMsg, setUpdateMsg] = useState(null);
+  const [noChanges, setNoChanges] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const filePickRef = useRef();
   const handleImageChange = (e) => {
@@ -82,6 +92,11 @@ export default function DashboardProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(formData).length === 0) {
+      setNoChanges(true);
+      setUpdateMsg("No Changes Made for Update");
+      return;
+    }
+    if (imageFileUploadProgress !== null) {
       return;
     }
     try {
@@ -91,6 +106,8 @@ export default function DashboardProfile() {
         .then((res) => {
           if (res.status == 200) {
             dispatch(updateSuccess(res.data?.user));
+            setUpdateMsg("Profile Update Successful");
+            setNoChanges(false);
           }
         })
         .catch((res) => {
@@ -103,9 +120,66 @@ export default function DashboardProfile() {
     }
   };
 
+  useEffect(() => {
+    if (updateMsg !== null) {
+      setTimeout(() => {
+        setUpdateMsg(null);
+      }, 2500);
+    }
+  }, [updateMsg]);
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(deleteUserStart());
+      await axios
+        .delete(`/api/user/delete/${currentUser._id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setShowModal(false);
+            dispatch(deleteUserSuccess());
+            navigate("/signin");
+          }
+        })
+        .catch((res) => {
+          if (res?.response?.data?.success == false) {
+            dispatch(updateFailure(res?.response?.data?.message));
+          }
+        });
+    } catch (error) {
+      dispatch(deleteUserFailure(error?.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      await axios.post(`/api/user/signout/${currentUser._id}`).then((res) => {
+        if (res.status === 200) {
+          dispatch(signOutUserSuccess());
+          navigate("/signin");
+        }
+      });
+    } catch (error) {
+      dispatch(signOutUserFailure());
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-5 text-center font-semibold text-2xl">Profile</h1>
+      {updateMsg && noChanges && (
+        <Alert color={"failure"} className="my-3">
+          {updateMsg}
+        </Alert>
+      )}
+      {updateMsg && !noChanges && (
+        <Alert color={"success"} className="my-3">
+          {updateMsg}
+        </Alert>
+      )}
+
       <form className="flex flex-col gap-4 w-full">
         <input
           className="hidden"
@@ -178,9 +252,43 @@ export default function DashboardProfile() {
         </Button>
       </form>
       <div className="text-red-500 dark:text-red-400 flex justify-between mt-5">
-        <span className="cursor-pointer">Delete Account</span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={() => setShowModal(true)}>
+          Delete Account
+        </span>
+        <span className="cursor-pointer" onClick={() => handleSignOut()}>
+          Sign Out
+        </span>
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size={"md"}
+      >
+        <Modal.Header
+          title="Delete Account"
+          className=" text-gray-500 dark:text-gray-300"
+        />
+        <Modal.Body>
+          <div className="text-center">
+            <HiExclamationCircle className="h-14 w-14 mb-3 text-gray-500 dark:text-gray-300 mx-auto" />
+            <h3 className=" text-gray-500 dark:text-gray-300 text-lg font-semibold">
+              Are You Sure You want to Delete Account ?
+            </h3>
+            <div className="flex gap-3 my-3 justify-center">
+              <Button color="failure" onClick={handleDelete}>
+                Yes, I'm Sure
+              </Button>
+              <Button
+                className="bg-gray-400"
+                onClick={() => setShowModal(false)}
+              >
+                No, Cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

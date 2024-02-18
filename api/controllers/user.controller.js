@@ -51,3 +51,29 @@ export const updateUser = async (req, res, next) => {
     }
 
 }
+
+export const deleteUser = async (req, res, next) => {
+    if (req.user?.id !== req.params.userId) {
+        return next(errorHandler(401, 'Not authorized'))
+    }
+    try {
+        await User.findByIdAndDelete(req.params.userId)
+        res.clearCookie('auth_token').status(200).json({ message: 'User Deleted Successfully' })
+    } catch (error) {
+        return next(error)
+
+    }
+}
+
+export const logOutUser = async (req, res, next) => {
+    if (req.user?.id !== req.params.userId) {
+        return next(errorHandler(401, 'Not authorized'))
+    }
+    try {
+        res.clearCookie('auth_token').status(200).json({ message: 'User Signed out Successfully' })
+
+    } catch (error) {
+        return next(error)
+
+    }
+}
