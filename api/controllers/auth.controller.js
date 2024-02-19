@@ -35,7 +35,7 @@ export const signIn = async (req, res, next) => {
             next(errorHandler(403, 'User Unauthorised'))
             return
         }
-        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' })
         const { password: pass, ...signedUser } = validUser._doc
         res.status(200).cookie('auth_token', token, { httpOnly: true }).json({ user: signedUser })
     } catch (error) {
@@ -48,7 +48,7 @@ export const googleSignIn = async (req, res, next) => {
         const { name, email, googlePhotoURL } = req.body
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+            const token = jwt.sign({ id: existingUser._id, isAdmin: existingUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' })
             const { password: pass, ...signedUser } = existingUser._doc
             res.status(200).cookie('auth_token', token, { httpOnly: true }).json({ user: signedUser })
         } else {
@@ -60,7 +60,7 @@ export const googleSignIn = async (req, res, next) => {
                 profilePicture: googlePhotoURL
             })
             await newUser.save()
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+            const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' })
             const { password: pass, ...signedUser } = newUser._doc
             res.status(200).cookie('auth_token', token, { httpOnly: true }).json({ user: signedUser })
         }

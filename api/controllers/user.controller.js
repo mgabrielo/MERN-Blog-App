@@ -41,7 +41,7 @@ export const updateUser = async (req, res, next) => {
                     password: req.body?.password ? req.body?.password : existedUser._doc.password,
                 }
             }, { new: true })
-            existingUser.save()
+
             const { password: pass, ...updateUser } = existingUser._doc
             res.status(200).json({ user: updateUser })
         }

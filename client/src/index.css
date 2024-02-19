@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    height: '100vh';
+}
+
+.ql-editor{
+    font-size: 1.05rem;
+}
+
+.ql-snow .ql-header{
+    @apply dark:bg-white;
+  }
+
+.ql-snow button{
+    @apply dark:bg-white;
+}

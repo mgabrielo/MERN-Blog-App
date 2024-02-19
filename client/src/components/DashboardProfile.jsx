@@ -1,7 +1,6 @@
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import axios from "axios";
@@ -22,11 +21,11 @@ import {
 } from "firebase/storage";
 import { HiExclamationCircle } from "react-icons/hi";
 import useLogOut from "../hooks/useLogOut";
+import { Link } from "react-router-dom";
 
 export default function DashboardProfile() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileURL, setImageFileURL] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -137,7 +136,7 @@ export default function DashboardProfile() {
           if (res.status === 200) {
             setShowModal(false);
             dispatch(deleteUserSuccess());
-            navigate("/signin");
+            handleSignOut();
           }
         })
         .catch((res) => {
@@ -231,9 +230,23 @@ export default function DashboardProfile() {
           gradientDuoTone={"purpleToBlue"}
           outline
           onClick={handleSubmit}
+          disabled={loading || imageFileUploadProgress}
         >
-          Update
+          {loading || imageFileUploadProgress
+            ? "Update In Progess..."
+            : "Update"}
         </Button>
+        {currentUser?.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone={"purpleToPink"}
+              className="w-full"
+            >
+              Create Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 dark:text-red-400 flex justify-between mt-5">
         <span className="cursor-pointer" onClick={() => setShowModal(true)}>
