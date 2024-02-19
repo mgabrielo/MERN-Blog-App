@@ -9,9 +9,6 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  signOutUserFailure,
-  signOutUserStart,
-  signOutUserSuccess,
   updateFailure,
   updateStart,
   updateSuccess,
@@ -24,6 +21,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { HiExclamationCircle } from "react-icons/hi";
+import useLogOut from "../hooks/useLogOut";
 
 export default function DashboardProfile() {
   const navigate = useNavigate();
@@ -37,7 +35,7 @@ export default function DashboardProfile() {
   const [updateMsg, setUpdateMsg] = useState(null);
   const [noChanges, setNoChanges] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const { handleSignOut } = useLogOut();
   const filePickRef = useRef();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -149,20 +147,6 @@ export default function DashboardProfile() {
         });
     } catch (error) {
       dispatch(deleteUserFailure(error?.message));
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      dispatch(signOutUserStart());
-      await axios.post(`/api/user/signout/${currentUser._id}`).then((res) => {
-        if (res.status === 200) {
-          dispatch(signOutUserSuccess());
-          navigate("/signin");
-        }
-      });
-    } catch (error) {
-      dispatch(signOutUserFailure());
     }
   };
 
