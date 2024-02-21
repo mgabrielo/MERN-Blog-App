@@ -53,9 +53,9 @@ export default function Header() {
         )}
       </Navbar.Collapse>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 space-y-2 md:space-y-0">
         <Button
-          className="w-12 h-10 hidden sm:inline order-2"
+          className="w-12 h-10 hidden sm:inline order-2 mt-2 md:mt-0 "
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
