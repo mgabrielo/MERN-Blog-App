@@ -1,5 +1,10 @@
 import { Sidebar } from "flowbite-react";
-import { HiArrowSmRight, HiDocumentText, HiUser } from "react-icons/hi";
+import {
+  HiArrowSmRight,
+  HiDocumentText,
+  HiOutlineUserGroup,
+  HiUser,
+} from "react-icons/hi";
 import { useTabLocation } from "../hooks/useTabLocation";
 import { Link } from "react-router-dom";
 import useLogOut from "../hooks/useLogOut";
@@ -18,7 +23,10 @@ export default function DashboardSideBar() {
             <Sidebar.Item
               active={tab == "profile"}
               icon={HiUser}
-              label={currentUser.isAdmin ? `Admin` : `User`}
+              label={
+                (currentUser.isAdmin && tab == "profile" && `Admin`) ||
+                (!currentUser.isAdmin && tab == "profile" && "User")
+              }
               labelColor="dark"
               as={"div"}
             >
@@ -30,10 +38,26 @@ export default function DashboardSideBar() {
               <Sidebar.Item
                 className="mt-1"
                 active={tab == "posts"}
+                label={currentUser.isAdmin && tab == "posts" && `Admin`}
+                labelColor="dark"
                 icon={HiDocumentText}
                 as={"div"}
               >
                 Posts
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser?.isAdmin && (
+            <Link to="/dashboard?tab=users">
+              <Sidebar.Item
+                className="mt-1"
+                active={tab == "users"}
+                label={currentUser.isAdmin && tab == "users" && `Admin`}
+                labelColor="dark"
+                icon={HiOutlineUserGroup}
+                as={"div"}
+              >
+                Users
               </Sidebar.Item>
             </Link>
           )}

@@ -171,11 +171,13 @@ export default function UpdatePost() {
           </div>
 
           {formData?.image && (
-            <img
-              src={formData.image}
-              alt="upload"
-              className="w-full h-72 object-cover"
-            />
+            <div className="h-[400px] w-full mx-auto object-cover">
+              <img
+                src={formData.image}
+                alt="upload"
+                className="w-full h-full px-0 rounded-md"
+              />
+            </div>
           )}
         </div>
 

@@ -17,3 +17,17 @@ body{
 .ql-snow button{
     @apply dark:bg-white;
 }
+
+.post-content {
+    @apply mb-2
+}
+
+.post-content h1{
+    @apply text-2xl font-semibold my-2
+}
+.post-content h2{
+    @apply text-xl font-semibold my-1
+}
+.post-content a{
+    @apply text-blue-500 dark:text-red-400 no-underline hover:underline
+}

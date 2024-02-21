@@ -6,6 +6,7 @@ import 'dotenv/config'
 import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
 import postRoutes from './routes/post.route.js'
+import commentRoutes from './routes/comment.route.js'
 
 const app = express()
 app.use(express.json())
@@ -23,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
+app.use('/api/comment', commentRoutes)
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500
