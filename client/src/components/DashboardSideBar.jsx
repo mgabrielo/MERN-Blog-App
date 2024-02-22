@@ -1,7 +1,9 @@
 import { Sidebar } from "flowbite-react";
 import {
   HiArrowSmRight,
+  HiChartPie,
   HiDocumentText,
+  HiOutlineChatAlt2,
   HiOutlineUserGroup,
   HiUser,
 } from "react-icons/hi";
@@ -19,6 +21,22 @@ export default function DashboardSideBar() {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="gap-3">
+          {currentUser?.isAdmin && (
+            <Link to="/dashboard?tab=dashboard-metrics">
+              <Sidebar.Item
+                className="mt-1"
+                active={tab == "dashboard-metrics"}
+                label={
+                  currentUser.isAdmin && tab == "dashboard-metrics" && `Admin`
+                }
+                labelColor="dark"
+                icon={HiChartPie}
+                as={"div"}
+              >
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
               active={tab == "profile"}
@@ -33,6 +51,7 @@ export default function DashboardSideBar() {
               Profile
             </Sidebar.Item>
           </Link>
+
           {currentUser?.isAdmin && (
             <Link to="/dashboard?tab=posts">
               <Sidebar.Item
@@ -58,6 +77,20 @@ export default function DashboardSideBar() {
                 as={"div"}
               >
                 Users
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser?.isAdmin && (
+            <Link to="/dashboard?tab=comments">
+              <Sidebar.Item
+                className="mt-1"
+                active={tab == "comments"}
+                label={currentUser.isAdmin && tab == "comments" && `Admin`}
+                labelColor="dark"
+                icon={HiOutlineChatAlt2}
+                as={"div"}
+              >
+                Comments
               </Sidebar.Item>
             </Link>
           )}

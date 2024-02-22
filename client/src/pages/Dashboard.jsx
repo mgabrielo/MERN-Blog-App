@@ -3,6 +3,8 @@ import DashboardProfile from "../components/DashboardProfile";
 import { useTabLocation } from "../hooks/useTabLocation";
 import DashboardPosts from "../components/DashboardPosts";
 import DashboardUsers from "../components/DashboardUsers";
+import DashboardComments from "../components/DashboardComments";
+import DashboardMetrics from "../components/DashboardMetrics";
 
 export default function Dashboard() {
   const { tab } = useTabLocation();
@@ -14,10 +16,12 @@ export default function Dashboard() {
         <DashboardSideBar />
       </div>
       {/* Profile */}
+      {tab == "dashboard-metrics" && <DashboardMetrics />}
       {tab == "profile" && <DashboardProfile />}
       {/* Posts */}
       {tab == "posts" && <DashboardPosts />}
       {tab == "users" && <DashboardUsers />}
+      {tab == "comments" && <DashboardComments />}
     </div>
   );
 }
