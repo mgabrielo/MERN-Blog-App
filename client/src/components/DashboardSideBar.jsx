@@ -24,7 +24,7 @@ export default function DashboardSideBar() {
           {currentUser?.isAdmin && (
             <Link to="/dashboard?tab=dashboard-metrics">
               <Sidebar.Item
-                className="mt-1"
+                className="mt-1 mb-1"
                 active={tab == "dashboard-metrics"}
                 label={
                   currentUser.isAdmin && tab == "dashboard-metrics" && `Admin`

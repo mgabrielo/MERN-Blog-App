@@ -41,11 +41,11 @@ export default function Home() {
       </div>
       <div className="max-w-6xl">
         {posts && posts.length > 0 && (
-          <div className="flex flex-col items-center gap-4 justify-center px-4 md:px-8 lg:px-12 text-center">
+          <div className="flex flex-col items-center gap-4 justify-center max-w-6xl px-4 sm:px-2 md:px-4 lg:px-5 text-center overflow-x-hidden">
             <h2 className="text-xl font-semibold mb-4">Recent Posts</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
               {posts.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <PostCard post={post} />
               ))}
             </div>
           </div>
