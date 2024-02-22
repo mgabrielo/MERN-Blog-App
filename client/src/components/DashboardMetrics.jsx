@@ -69,9 +69,7 @@ export default function DashboardMetrics() {
       fetchComments();
     }
   }, [currentUser.isAdmin]);
-  console.log(users);
-  console.log(posts);
-  console.log(comments);
+
   return (
     <div className="p-3 md:mx-auto">
       <div className="flex flex-wrap gap-4 justify-center">
