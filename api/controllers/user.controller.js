@@ -36,7 +36,7 @@ export const updateUser = async (req, res, next) => {
         if (existedUser) {
             const existingUser = existedUser && await User.findByIdAndUpdate(req.params.userId, {
                 $set: {
-                    username: req.body?.email ? req.body.username : existedUser._doc.username,
+                    username: req.body?.username ? username : existedUser._doc.username,
                     email: req.body?.email ? req.body?.email : existedUser._doc.email,
                     profilePicture: req.body?.profilePicture ? req.body?.profilePicture : existedUser._doc.profilePicture,
                     password: req.body?.password ? req.body?.password : existedUser._doc.password,
