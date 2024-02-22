@@ -20,7 +20,7 @@ export default function Home() {
     };
     fetchPosts();
   }, []);
-  console.log(posts);
+
   return (
     <div className="flex flex-col min-h-screen max-w-6xl mx-auto">
       <div className="flex flex-col gap-6 p-3 lg:p-16 w-full ">
