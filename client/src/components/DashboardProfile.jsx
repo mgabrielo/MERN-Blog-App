@@ -100,7 +100,6 @@ export default function DashboardProfile() {
     }
     try {
       dispatch(updateStart());
-      // console.log(formData.username);
       await axios
         .put(`/api/user/update/${currentUser?._id}`, formData)
         .then((res) => {
@@ -155,8 +154,8 @@ export default function DashboardProfile() {
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-5 text-center font-semibold text-2xl">Profile</h1>
-      {(updateMsg && noChanges) ||
-        (errorMessage && (
+      {errorMessage ||
+        (updateMsg && noChanges && (
           <Alert color={"failure"} className="my-3">
             {updateMsg || errorMessage}
           </Alert>
