@@ -42,16 +42,6 @@ export default function Comments({ comment, handleLike, onEdit, onDelete }) {
     }
   };
 
-  //   const handleDelete =async(commentId)=>{
-  //     try {
-  //         await axios(`/api/comment/deleteComment/${commentId}`).then((res)=>{
-
-  //         })
-  //     } catch (error) {
-  //         console.log(error)
-  //     }
-  //   }
-
   return (
     <div className="flex p-3 border-b border-gray-500 dark:border-gray-300">
       <div className="flex-shrink-0 mr-2">
@@ -66,7 +56,7 @@ export default function Comments({ comment, handleLike, onEdit, onDelete }) {
           <span className="text-sm font-bold mr-1 truncate">
             @{user?.username ? user.username : "Anonymous"}
           </span>
-          <span className="text-gray-500 text-sm">
+          <span className="text-gray-500 dark:text-gray-400 text-sm">
             {moment(comment?.createdAt).fromNow()}
           </span>
         </div>

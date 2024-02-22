@@ -81,11 +81,13 @@ export default function PostPage() {
               </Button>
             )}
           </Link>
-          <img
-            src={userPost?.image}
-            alt={userPost.title}
-            className="my-8 max-h-[500px] px-20 w-full object-cover"
-          />
+          <div className="w-full flex object-cover justify-center">
+            <img
+              src={userPost?.image}
+              alt={userPost.title}
+              className="my-8 max-h-[500px] px-20"
+            />
+          </div>
           <div className="flex justify-between p-3 border-b border-slate-400 my-3 gap-3 w-full max-w-4xl mx-auto">
             <span>{new Date(userPost?.createdAt).toLocaleDateString()}</span>
             <span>

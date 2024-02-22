@@ -104,6 +104,11 @@ export default function CreatePost() {
             <option value={"JavaScript"}>JavaScript</option>
             <option value={"Java"}>Java</option>
             <option value={"NextJs"}>NextJs</option>
+            <option value={"Houses"}>Houses</option>
+            <option value={"Gaming"}>Gaming</option>
+            <option value={"Mobile"}>Mobile</option>
+            <option value={"Education"}>Education</option>
+            <option value={"Jobs"}>Jobs</option>
           </Select>
         </div>
         <div className="flex flex-col gap-4 border-4 border-teal-500 border-dotted p-3 rounded-lg">

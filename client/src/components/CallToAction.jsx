@@ -11,7 +11,11 @@ export default function CallToAction() {
           gradientDuoTone={"purpleToPink"}
           className="rounded rounded-tl-none"
         >
-          <a href="#" target="__blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/mgabrielo"
+            target="__blank"
+            rel="noopener noreferrer"
+          >
             Learn More
           </a>
         </Button>

@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/user.model.js'
+import { errorHandler } from "../utils/error.js";
 
 export const updateUser = async (req, res, next) => {
     if (req.user?.id !== req.params.userId) {
@@ -13,7 +14,7 @@ export const updateUser = async (req, res, next) => {
     }
     const username = req.body.username
     if (username) {
-        if (username.length < 7 || username.length > 20) {
+        if (username.length < 4 || username.length > 20) {
             return next(errorHandler(401, 'username must be between 7 and 20 Characters'))
         }
 
@@ -35,7 +36,7 @@ export const updateUser = async (req, res, next) => {
         if (existedUser) {
             const existingUser = existedUser && await User.findByIdAndUpdate(req.params.userId, {
                 $set: {
-                    username: req.body?.email ? username : existedUser._doc.username,
+                    username: req.body?.email ? req.body.username : existedUser._doc.username,
                     email: req.body?.email ? req.body?.email : existedUser._doc.email,
                     profilePicture: req.body?.profilePicture ? req.body?.profilePicture : existedUser._doc.profilePicture,
                     password: req.body?.password ? req.body?.password : existedUser._doc.password,

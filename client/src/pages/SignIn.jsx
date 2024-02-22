@@ -61,7 +61,7 @@ export default function SignIn() {
             &nbsp;Blog
           </Link>
           <p className="mt-4 text-sm">
-            This Demo Project for React Development and Research to Drive
+            This Demo Project for React Development and Research will Drive
             Innovation
           </p>
         </div>
@@ -104,7 +104,10 @@ export default function SignIn() {
           </form>
           <div className="flex gap-3 my-3">
             <span>Don't Have An Account ...?</span>
-            <Link to={"/signup"} className=" text-blue-500 hover:underline">
+            <Link
+              to={"/signup"}
+              className="text-blue-500 dark:text-cyan-400 hover:underline"
+            >
               Sign Up
             </Link>
           </div>

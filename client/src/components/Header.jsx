@@ -80,28 +80,33 @@ export default function Header() {
           {theme == "light" ? <FaSun /> : <FaMoon />}
         </Button>
         {currentUser ? (
-          <Dropdown
-            arrowIcon={false}
-            inline
-            label={
-              <Avatar alt="user" img={currentUser?.profilePicture} rounded />
-            }
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">@{currentUser?.username}</span>
-              <span className="block text-sm font-medium truncate">
-                {currentUser?.email}
-              </span>
-            </Dropdown.Header>
-
-            <Link to={"/dashboard?tab=profile"}>
-              <Dropdown.Item>Profile</Dropdown.Item>
+          <div className="w-full hidden md:flex items-center gap-2">
+            <Link to="/dashboard?tab=profile">
+              <p>{currentUser.username}</p>
             </Link>
-            <Dropdown.Divider />
-            <Dropdown.Item as={"div"} onClick={() => handleSignOut()}>
-              Sign Out
-            </Dropdown.Item>
-          </Dropdown>
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar alt="user" img={currentUser?.profilePicture} rounded />
+              }
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">@{currentUser?.username}</span>
+                <span className="block text-sm font-medium truncate">
+                  {currentUser?.email}
+                </span>
+              </Dropdown.Header>
+
+              <Link to={"/dashboard?tab=profile"}>
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              <Dropdown.Item as={"div"} onClick={() => handleSignOut()}>
+                Sign Out
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
         ) : (
           <Link to="/signin">
             <Button gradientDuoTone={"purpleToBlue"} outline>
