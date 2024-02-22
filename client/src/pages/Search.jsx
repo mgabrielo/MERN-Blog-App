@@ -37,7 +37,6 @@ export default function Search() {
           .get(`/api/post/getposts?${searchQuery}`)
           .then((res) => {
             if (res.status == 200 && res.data) {
-              console.log(res.data);
               setPosts(res.data?.posts);
               setLoading(false);
               if (res.data?.posts?.length === 9) {
@@ -57,7 +56,7 @@ export default function Search() {
     };
     fetchPosts();
   }, [location.search]);
-  //   console.log(sidebBarData);
+
   const handleChange = (e) => {
     if (e.target.id === "searchTerm") {
       setSidebBarData({ ...sidebBarData, searchTerm: e.target.value });
@@ -81,7 +80,7 @@ export default function Search() {
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
-  console.log(posts);
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b  md:border-r  md:min-h-screen border-gray-400">
@@ -128,8 +127,8 @@ export default function Search() {
         </form>
       </div>
 
-      <div className="flex justify-center p-3 text-2xl">
-        <h1>Search Results:</h1>
+      <div className="flex flex-col w-full justify-center p-3 text-2xl">
+        <h1 className="">Search Results:</h1>
         <div className="p-7 flex flex-wrap gap-4 my-2">
           {posts.length > 0 &&
             posts.map((post) => <PostCard key={post._id} post={post} />)}

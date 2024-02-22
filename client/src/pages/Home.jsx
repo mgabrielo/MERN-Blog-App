@@ -33,17 +33,17 @@ export default function Home() {
           to="/search"
           className="text-sm sm:text-md text-cyan-700 dark:text-cyan-500 font-semibold hover:underline"
         >
-          View All Post
+          View All Posts
         </Link>
         <div className="flex justify-center bg-amber-200 dark:bg-slate-700 py-5 w-full mt-3 rounded-md">
           <CallToAction />
         </div>
       </div>
-      <div className="max-w-6xl mx-auto p-3 lg:px-16 flex flex-col gap-4  ">
+      <div className="max-w-6xl">
         {posts && posts.length > 0 && (
-          <div className="flex flex-col gap-5 text-center">
-            <h2 className="text-lg font-semibold">Recent Post</h2>
-            <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col items-center gap-4 justify-center px-4 md:px-8 lg:px-12 text-center">
+            <h2 className="text-xl font-semibold mb-4">Recent Posts</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
