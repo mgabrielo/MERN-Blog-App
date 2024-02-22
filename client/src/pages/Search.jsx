@@ -62,13 +62,14 @@ export default function Search() {
       setSidebBarData({ ...sidebBarData, searchTerm: e.target.value });
     }
 
-    if (e.target.id == "sort") {
-      const order = e.target.value || "desc";
+    if (e.target.id === "sort") {
+      const order = e.target.value !== null ? e.target.value : "desc";
       setSidebBarData({ ...sidebBarData, sort: order });
     }
-    if (e.target.id == "category") {
-      const category = e.target.value || "uncategorized";
-      setSidebBarData({ ...sidebBarData, category });
+    if (e.target.id === "category") {
+      const category =
+        e.target.value !== null ? e.target.value : "uncategorized";
+      setSidebBarData({ ...sidebBarData, category: category });
     }
   };
   const handleSubmit = async (e) => {
@@ -83,7 +84,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b  md:border-r  md:min-h-screen border-gray-400">
+      <div className="p-3 border-b  md:border-r  md:min-h-screen border-gray-400">
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex items-center gap-2 ">
             <label className="whitespace-nowrap font-semibold">
@@ -121,17 +122,24 @@ export default function Search() {
               <option value={"JavaScript"}>JavaScript</option>
               <option value={"Java"}>Java</option>
               <option value={"NextJs"}>NextJs</option>
+              <option value={"Houses"}>Houses</option>
+              <option value={"Gaming"}>Gaming</option>
+              <option value={"Mobile"}>Mobile</option>
+              <option value={"Education"}>Education</option>
+              <option value={"Jobs"}>Jobs</option>
             </Select>
           </div>
           <Button type="submit">Search</Button>
         </form>
       </div>
 
-      <div className="flex flex-col w-full justify-center p-3 text-2xl">
+      <div className="flex flex-col w-full mx-auto p-3 text-2xl">
         <h1 className="">Search Results:</h1>
         <div className="p-7 flex flex-wrap gap-4 my-2">
-          {posts.length > 0 &&
-            posts.map((post) => <PostCard key={post._id} post={post} />)}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2 oveflow-x-hidden">
+            {posts.length > 0 &&
+              posts.map((post) => <PostCard key={post._id} post={post} />)}
+          </div>
         </div>
       </div>
     </div>
