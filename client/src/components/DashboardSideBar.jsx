@@ -94,14 +94,16 @@ export default function DashboardSideBar() {
               </Sidebar.Item>
             </Link>
           )}
-          <Sidebar.Item
-            icon={HiArrowSmRight}
-            labelColor="dark"
-            as={"div"}
-            onClick={() => handleSignOut()}
-          >
-            Sign Out
-          </Sidebar.Item>
+          {currentUser && (
+            <Sidebar.Item
+              icon={HiArrowSmRight}
+              labelColor="dark"
+              as={"div"}
+              onClick={() => handleSignOut()}
+            >
+              Sign Out
+            </Sidebar.Item>
+          )}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

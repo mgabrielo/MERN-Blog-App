@@ -104,9 +104,9 @@ export default function DashboardProfile() {
         .put(`/api/user/update/${currentUser?._id}`, formData)
         .then((res) => {
           if (res.status == 200) {
+            setNoChanges(false);
             dispatch(updateSuccess(res.data?.user));
             setUpdateMsg("Profile Update Successful");
-            setNoChanges(false);
           }
         })
         .catch((res) => {
@@ -179,7 +179,12 @@ export default function DashboardProfile() {
           onClick={() => filePickRef.current.click()}
         >
           <img
-            src={imageFileURL ? imageFileURL : currentUser.profilePicture}
+            src={
+              imageFileURL
+                ? imageFileURL
+                : currentUser.profilePicture ||
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            }
             alt="user-avatar"
             className="relative rounded-full w-full h-full border-8 border-gray-200 object-cover"
           />
